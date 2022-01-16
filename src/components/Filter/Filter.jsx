@@ -1,5 +1,6 @@
 import React from 'react';
 import { FindForm, Title, Label, LabelTitle, Input } from './Filter.styled';
+import propTypes from "prop-types";
 
 const Filter = ({ value, onChange }) => {
   return (
@@ -17,6 +18,11 @@ const Filter = ({ value, onChange }) => {
       </Label>
     </FindForm>
   );
+};
+
+Filter.propTypes = {
+  value: propTypes.string,
+  onChange: propTypes.func,
 };
 
 export default Filter;

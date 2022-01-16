@@ -5,6 +5,8 @@ import Filter from './components/Filter';
 import styles from './App.css';
 import { MyPhonebook, Header, SecondHeader } from './App.styled';
 import { nanoid } from 'nanoid';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   const [contacts, setContacts] = useState([]);
@@ -16,7 +18,14 @@ const App = () => {
       name,
       number,
     };
-    setContacts(prevContacts => [contact, ...prevContacts]);
+
+    const found = contacts.some(function (e) {
+      return e.name === name;
+    });
+
+    found
+      ? toast.error('Contact already exist')
+      : setContacts(prevContacts => [contact, ...prevContacts]);
   };
 
   const getVisibleContacts = () => {
@@ -42,7 +51,7 @@ const App = () => {
 
   useEffect(() => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
-  });
+  }, [contacts]);
 
   return (
     <>
@@ -52,6 +61,7 @@ const App = () => {
         <Filter value={filter} onChange={changeFilter} />
         <SecondHeader>My contacts:</SecondHeader>
         <ContactList contacts={getVisibleContacts()} onDelete={deleteContact} />
+        <ToastContainer autoClose={3000} position="top-center" theme="colored" />
       </MyPhonebook>
     </>
   );
