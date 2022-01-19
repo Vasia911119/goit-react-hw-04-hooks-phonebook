@@ -20,7 +20,7 @@ const App = () => {
     };
 
     const found = contacts.some(function (e) {
-      return e.name === name;
+      return e.name.toLowerCase() === name.toLowerCase();
     });
 
     found
